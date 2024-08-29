@@ -1,7 +1,6 @@
 const express = require('express')
 const app = express()
-
-app.use(express.json())
+const morgan = require('morgan');
 
 let persons = [
     { 
@@ -25,6 +24,27 @@ let persons = [
       "number": "39-23-6423122"
     }
 ]
+
+app.use(express.json())
+
+morgan.token('data',(request)=>{
+    if(request.method==='POST'){
+        return JSON.stringify(request.body)
+    }
+    return '';
+})
+
+const customform=(tokens,request,response)=>{
+    return [
+        tokens.method(request, response),
+        tokens.url(request, response),
+        tokens.status(request, response),
+        tokens['response-time'](request, response) + ' ms',
+        tokens.data(request, response) // Include body only if it is available
+      ].join(' ');
+}
+
+app.use(morgan(customform));
 
 app.get('/', (request, response) => {
 response.send('<h1>Phonebook Database</h1>')

@@ -1,6 +1,5 @@
 const express = require('express')
 const app = express()
-const morgan = require('morgan');
 
 let persons = [
     { 
@@ -25,7 +24,11 @@ let persons = [
     }
 ]
 
+const cors = require('cors')
+app.use(cors())
 app.use(express.json())
+
+const morgan = require('morgan')
 
 morgan.token('data',(request)=>{
     if(request.method==='POST'){
@@ -63,7 +66,7 @@ app.get('/api/persons/:id', (request, response) => {
   const person = persons.find(person => person.id === id)
 
   if(person){
-    response.send('<div><h2>Person Details</h2><p> Name: ' + person.name + '</p> Contact: '+ person.number +'<p>' + '</p></div>')
+    response.json(person)
   }else{
     response.status(404).json({error: "No such person exists in the database"})
   }

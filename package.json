@@ -1,5 +1,5 @@
 {
-  "name": "fsopenpart3",
+  "name": "phonebookbackend",
   "version": "1.0.0",
   "description": "backend for fsopen/part2/phonebook",
   "main": "index.js",
@@ -11,6 +11,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.19.2",
     "morgan": "^1.10.0"
   },
